@@ -12,11 +12,16 @@ export default {
   <ul>
     <li v-for="item in feeds">
       <font-awesome-icon :icon='["fas", item.icon]' class="icon" />
-      <span style="display: none">{{ item.name }}</span>
+
+      <span class="label">{{ item.name }}</span>
     </li>
   </ul>
 
-  <button class="add_feed">+</button>
+  <button class="add_feed">
+    +
+
+    <span class="label">Adicionar feed</span>
+  </button>
 </template>
 
 <style scoped>
@@ -31,12 +36,27 @@ ul li {
   list-style: none;
   justify-content: center;
   padding: .5rem 0;
+  position: relative;
 }
 ul li:hover {
   color: var(--vt-c-white);
 }
 ul li .icon {
   font-size: 1rem;
+}
+ul li .label, .add_feed .label {
+  position: absolute;
+  left: 110%;
+  top: 0;
+  background: var(--vt-c-black-mute);
+  color: var(--color-text);
+  white-space: nowrap;
+  z-index: 9;
+  padding: .5rem 1.5rem .5rem 1rem;
+  display: none;
+}
+ul li:hover .label, .add_feed:hover .label {
+  display: initial;
 }
 
 .add_feed {
@@ -49,5 +69,11 @@ ul li .icon {
 }
 .add_feed:hover {
   color: var(--vt-c-white);
+}
+.add_feed .label {
+  font-size: 1rem;
+  line-height: initial;
+  left: 100%;
+  top: -40%;
 }
 </style>

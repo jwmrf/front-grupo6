@@ -20,6 +20,10 @@ a,
 @media (min-width: 1024px) {
   #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 60px 1fr;
+    overflow: scroll;
+  }
+  #app > * {
+    min-width: 0px;
   }
 }

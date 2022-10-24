@@ -8,10 +8,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import { faListSquares, faListCheck } from "@fortawesome/free-solid-svg-icons";
+import { faListSquares, faListCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faListSquares);
 library.add(faListCheck);
+library.add(faTrash);
 
 const app = createApp(App);
 
