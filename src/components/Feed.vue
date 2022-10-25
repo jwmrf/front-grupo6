@@ -15,9 +15,9 @@ export default {
     }
   },
   mounted() {
-    setInterval(() => {
+    //setInterval(() => {
       this.fetchData()
-    },5000)
+    //}, 5000)
   },
   methods: {
     async fetchData() {

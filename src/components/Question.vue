@@ -15,11 +15,11 @@ export default {
 
 <template>
   <div class="question_container">
-    <img class="avatar" src="https://www.gravatar.com/avatar/975b7da3f157788aa827cf1c6b23a4cd?s=256&d=identicon&r=PG" />
+    <img class="avatar" :src="question.owner.profile_image" />
     <div class="content">
       <span class="username">
         {{question.owner.display_name}}
-        <span>{{moment.unix(1666675010).fromNow()}}</span>
+        <span>{{moment.unix(question.creation_date).fromNow()}}</span>
       </span>
       <p class="question">{{question.title}}</p>
       <ul class="tags">
@@ -54,20 +54,21 @@ export default {
 }
 .question_container .question {
   font-weight: bold;
-  margin-bottom: .5rem;
 }
 .question_container .tags {
   display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
+  flex-wrap: wrap;
 }
 .question_container .tags li {
   color: var(--vt-c-white-mute);
   background: var(--vt-c-indigo);
   padding: .2rem .4rem;
-  border-radius: 20%/50%;
+  border-radius: 1000px;
   font-size: .75rem;
+  margin-top: .5rem;
 }
 .question_container .tags li:not(:last-of-type) {
   margin-right: .5rem;
