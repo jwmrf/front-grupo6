@@ -1,51 +1,41 @@
 <script>
 import QuestionVue from './Question.vue';
 import axios from "axios";
-//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-//axios.defaults.headers.common['Access-Control-Allow-Methods'] = "GET, POST, PATCH, PUT, DELETE, OPTIONS";
-//axios.defaults.headers.common['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type, Accept";
 import { ref, computed, onMounted } from "vue";
 
 export default {
   components: {
     QuestionVue
   },
-  props: ['tag'],
-  setup(props) {
-    const data = ref(null);
-    const loading = ref(true);
-    const error = ref(null);
-
-    function fetchData() {
-      loading.value = true;
-
-      return axios.get(`http://127.0.0.1:3000/questionByTag?tag=${props.tag}`).then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-    }
-
-    onMounted(() => {
-      fetchData();
-    });
-
+  data () {
     return {
-      data,
-      loading,
-      error
+      feedData: [],
+      tags: ["todas","c#","java","nodejs","javascript","python","php","android","ios","mysql","node.js"]
     }
   },
+  mounted() {
+    setInterval(() => {
+      this.fetchData()
+    },5000)
+  },
+  methods: {
+    async fetchData() {
+      const data = ref(null);
+      const loading = ref(true);
+      const error = ref(null);
+      loading.value = true;
+      let response = await axios.get(`http://127.0.0.1:3000/questionByTagNormal?tag=${this.tag}`)
+      this.feedData = response.data.data
+      console.log(this.feedData)
+      return {
+        data,
+        loading,
+        error
+      }
+    }
+  },
+  props: ['tag'],
   created: function() {
-    //const connection = new WebSocket("ws://127.0.0.1:4000/");
-
-    //connection.onmessage = event => {
-      //console.log("received");
-    //}
   }
 }
 </script>
@@ -53,6 +43,9 @@ export default {
 <template>
   <div class="container">
     <div class="header">
+        <select v-model="tag">
+          <option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</option>
+        </select>
       <h3>
         <slot name="name"></slot>
       </h3>
@@ -61,7 +54,7 @@ export default {
       </button>
     </div>
     <div class="body">
-      <QuestionVue></QuestionVue>
+      <QuestionVue v-for="feed in feedData" :question="feed" :key="feed"></QuestionVue>
     </div>
   </div>
 </template>

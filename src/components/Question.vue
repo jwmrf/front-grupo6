@@ -4,6 +4,11 @@ import moment from 'moment'
 export default {
   created: function () {
     this.moment = moment
+  },
+  mounted() {
+  },
+  props: {
+    question : {}
   }
 }
 </script>
@@ -13,13 +18,12 @@ export default {
     <img class="avatar" src="https://www.gravatar.com/avatar/975b7da3f157788aa827cf1c6b23a4cd?s=256&d=identicon&r=PG" />
     <div class="content">
       <span class="username">
-        Tittoh
+        {{question.owner.display_name}}
         <span>{{moment.unix(1666675010).fromNow()}}</span>
       </span>
-      <p class="question">This application has no explicit mapping for /error. here was an unexpected error (type=Internal Server Error, status=500). during template parsing</p>
+      <p class="question">{{question.title}}</p>
       <ul class="tags">
-        <li>javascript</li>
-        <li>reactjs</li>
+        <li v-for="tag in question.tags" :key="tag">{{tag}}</li>
       </ul>
     </div>
   </div>
