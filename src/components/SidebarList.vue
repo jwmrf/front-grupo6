@@ -4,20 +4,27 @@ export default {
     return {
       feeds: [{'id': 1, 'name': 'item 1', 'icon': 'list'}, {'id': 2, 'name': 'item 2', 'icon': 'list-check'}]
     }
+  },
+  methods: {
+    addFeed() {
+      this.feeds.push({'id': 1, 'name': 'item 1', 'icon': 'list'})
+      this.$emit("addfeed", "")
+      console.log(2)
+    }
   }
 }
 </script>
 
 <template>
   <ul class="icons_list">
-    <li v-for="item in feeds">
+    <li v-for="item in feeds" :key="item">
       <font-awesome-icon :icon='["fas", item.icon]' class="icon" />
 
       <span class="label">{{ item.name }}</span>
     </li>
   </ul>
 
-  <button class="add_feed">
+  <button class="add_feed" @click="addFeed()">
     +
 
     <span class="label">Adicionar feed</span>
