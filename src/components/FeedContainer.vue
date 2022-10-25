@@ -24,6 +24,11 @@ export default {
     },
     removeFeed(id) {
       this.feeds.splice(this.feeds.findIndex(el => el.id == id), 1);
+    },
+    changeTag(newTag, feedId) {
+      const id = this.feeds.findIndex(el => el.id == feedId);
+
+      this.feeds[id].name = newTag;
     }
   },
   mounted() {
@@ -36,7 +41,7 @@ export default {
 
 <template>
   <div class="main" @addfeed="addFeed">
-    <FeedVue v-for="feed in feeds" :tag="feed.name" :feedid="feed.id" :key="feed" @removefeed="removeFeed">
+    <FeedVue v-for="feed in feeds" :tag="feed.name" :feedid="feed.id" :key="feed" @removefeed="removeFeed" @change-tag="changeTag">
       <template #name>
       </template>
     </FeedVue>

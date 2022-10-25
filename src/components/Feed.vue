@@ -62,7 +62,7 @@ export default {
       }
     },
     onChange(event) {
-      this.changedTag = event.target.value;
+      this.$emit("change-tag", event.target.value, this.$props.feedid);
       this.fetchData();
     },  
     removeFeed() {
