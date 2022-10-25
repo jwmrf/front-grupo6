@@ -39,9 +39,6 @@ export default {
   <div class="main" @addfeed="addFeed" @removefeed="removeFeed">
     <FeedVue v-for="feed in feeds" :tag="feed.name" :feedid="feed.id" :key="feed">
       <template #name>
-        <select>
-          <option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</option>
-        </select>
       </template>
     </FeedVue>
   </div>

@@ -1,47 +1,46 @@
 <script>
 import QuestionVue from './Question.vue';
 import axios from "axios";
-import { ref, onMounted } from "vue";
+
+import { ref } from "vue";
 
 export default {
   components: {
     QuestionVue
   },
-  props: ['tag','feedid'],
-  setup(props) {
-    const data = ref(null);
-    const loading = ref(true);
-    const error = ref(null);
-
-    function fetchData() {
-      loading.value = true;
-
-      return axios.get(`http://127.0.0.1:3000/questionByTag?tag=${props.tag}`).then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      })
-      .finally(function () {
-        // always executed
-      });
-    }
-
-    onMounted(() => {
-      fetchData();
-    });
-
+  data () {
     return {
-      data,
-      loading,
-      error
+      feedData: [],
+      tags: ["todas","c#","java","nodejs","javascript","python","php","android","ios","mysql","node.js"]
     }
   },
+  mounted() {
+    setInterval(() => {
+      this.fetchData()
+    },5000)
+  },
   methods: {
+    async fetchData() {
+      const data = ref(null);
+      const loading = ref(true);
+      const error = ref(null);
+      loading.value = true;
+      let response = await axios.get(`http://127.0.0.1:3000/questionByTagNormal?tag=${this.tag}`)
+      this.feedData = response.data.data
+      console.log(this.feedData)
+      return {
+        data,
+        loading,
+        error
+      }
+    },
     removeFeed() {
       console.log('hh', this.$props.feedid);
       this.$emit('removefeed', this.$props.feedid);
     }
+  },
+  props: ['tag'],
+  created: function() {
   }
 }
 </script>
@@ -49,6 +48,9 @@ export default {
 <template>
   <div class="container">
     <div class="header">
+        <select v-model="tag">
+          <option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</option>
+        </select>
       <h3>
         <slot name="name"></slot>
       </h3>
@@ -57,7 +59,7 @@ export default {
       </button>
     </div>
     <div class="body">
-      <QuestionVue></QuestionVue>
+      <QuestionVue v-for="feed in feedData" :question="feed" :key="feed"></QuestionVue>
     </div>
   </div>
 </template>
