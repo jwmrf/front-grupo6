@@ -1,5 +1,69 @@
-<script setup>
-import QuestionVue from './Question.vue'
+<script>
+import QuestionVue from './Question.vue';
+import { ref, computed, onMounted } from "vue";
+
+export default {
+  components: {
+    QuestionVue
+  },
+  props: ['tag'],
+  setup(props) {
+    const data = ref(null);
+    const loading = ref(true);
+    const error = ref(null);
+
+    function fetchData() {
+      loading.value = true;
+
+      return fetch(`http://localhost:3000/questionByTagNormal?tag=${props.tag}`, {
+        method: 'get',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(res => {
+        if (!res.ok) {
+          const error = new Error(res.statusText);
+          error.json = res.json()
+
+          throw error;
+        }
+
+        return res.json();
+      }).then(json => {
+        data.value = json.data;
+
+        console.log(data.value);
+      }).catch(err => {
+        error.value = err;
+
+        if (err.json) {
+          return err.json.then(json => {
+            error.value.message = json.message;
+          })
+        }
+      }).then(() => {
+        loading.value = false;
+      })
+    }
+
+    onMounted(() => {
+      fetchData();
+    });
+
+    return {
+      data,
+      loading,
+      error
+    }
+  },
+  created: function() {
+    const connection = new WebSocket("ws://127.0.0.1:4000/");
+
+    connection.onmessage = event => {
+      console.log("received");
+    }
+  }
+}
 </script>
 
 <template>

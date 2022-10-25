@@ -7,7 +7,7 @@ export default {
   },
   data () {
     return {
-      feeds: [{"id": 1, "name": "feed 1"}, {"id": 2, "name": "list 2"}]
+      feeds: [{"id": 1, "name": "Javascript"}, {"id": 2, "name": "React"}]
     }
   }
 }
@@ -15,7 +15,7 @@ export default {
 
 <template>
   <div class="main">
-    <FeedVue v-for="feed in feeds">
+    <FeedVue v-for="feed in feeds" :tag="feed.name">
       <template #name>
         {{ feed.name }}
       </template>
