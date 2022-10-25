@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "moment": "^2.29.4",
+    "socket.io-client": "^4.5.3",
     "vue": "^3.2.41",
     "vue-router": "^4.1.5"
   },

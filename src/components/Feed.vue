@@ -15,7 +15,7 @@ export default {
     function fetchData() {
       loading.value = true;
 
-      return fetch(`http://localhost:3000/questionByTagNormal?tag=${props.tag}`, {
+      return fetch(`http://localhost:3000/questionByTag?tag=${props.tag}`, {
         method: 'get',
         headers: {
           'content-type': 'application/json'
@@ -54,13 +54,6 @@ export default {
       data,
       loading,
       error
-    }
-  },
-  created: function() {
-    const connection = new WebSocket("ws://127.0.0.1:4000/");
-
-    connection.onmessage = event => {
-      console.log("received");
     }
   }
 }

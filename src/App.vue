@@ -1,6 +1,20 @@
-<script setup>
+<script>
 import FeedContainerVue from './components/FeedContainer.vue';
 import SidebarListVue from './components/SidebarList.vue';
+import socketioService from "./services/socketio.service"
+
+export default {
+  components: {
+    FeedContainerVue,
+    SidebarListVue
+  },
+  created() {
+    socketioService.setupSocketConnection();
+  },
+  beforeUnmount() {
+    socketioService.disconnect();
+  }
+}
 </script>
 
 <template>
