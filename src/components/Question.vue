@@ -1,11 +1,24 @@
 <script>
 import moment from 'moment'
 
+import socketioService from '../services/socketio.service';
+
 export default {
   created: function () {
     this.moment = moment
   },
+  data() {
+    return {
+      datecreation: moment.unix(this.question.creation_date).fromNow()
+    }
+  },
   mounted() {
+    const socket = socketioService.getSocket();
+
+    socket.on("new_question", (data) => {
+      this.datecreation = this.moment.unix(this.$props.question.creation_date).fromNow();
+      console.log('update', this.datecreation);
+    });
   },
   props: {
     question : {}
@@ -19,7 +32,7 @@ export default {
     <div class="content">
       <span class="username">
         {{question.owner.display_name}}
-        <span>{{moment.unix(question.creation_date).fromNow()}}</span>
+        <span v-text="datecreation"></span>
       </span>
       <p class="question"><a :href="question.link" target="_blank">{{question.title}}</a></p>
       <ul class="tags">
