@@ -54,6 +54,7 @@ export default {
 }
 .question_container .question {
   font-weight: bold;
+  word-break: anywhere;
 }
 .question_container .tags {
   display: flex;

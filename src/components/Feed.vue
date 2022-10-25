@@ -39,9 +39,7 @@ export default {
       this.$emit('removefeed', this.$props.feedid);
     }
   },
-  props: ['tag'],
-  created: function() {
-  }
+  props: ['tag','feedid']
 }
 </script>
 

@@ -20,11 +20,10 @@ export default {
   },
   methods: {
     addFeed(x) {
-      this.feeds.push({'id': Math.floor(Date.now() / 1000), 'name': `Feed ${this.feeds.length + 1}`, 'icon': 'list'})
+      this.feeds.push({'id': Math.floor(Date.now() / 1000), 'name': 'android', 'icon': 'list'})
     },
     removeFeed(id) {
-      console.log(id);
-      this.feeds.splice(0, this.feeds.length, this.feeds.filter(el => el.id != id));
+      this.feeds.splice(this.feeds.findIndex(el => el.id == id), 1);
     }
   },
   mounted() {
@@ -36,8 +35,8 @@ export default {
 </script>
 
 <template>
-  <div class="main" @addfeed="addFeed" @removefeed="removeFeed">
-    <FeedVue v-for="feed in feeds" :tag="feed.name" :feedid="feed.id" :key="feed">
+  <div class="main" @addfeed="addFeed">
+    <FeedVue v-for="feed in feeds" :tag="feed.name" :feedid="feed.id" :key="feed" @removefeed="removeFeed">
       <template #name>
       </template>
     </FeedVue>

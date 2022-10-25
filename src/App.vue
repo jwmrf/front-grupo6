@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     addFeed() {
-      this.feeds.push({'id': 1, 'name': 'android', 'icon': 'list'})
+      this.feeds.push({'id':  Math.floor(Date.now() / 1000), 'name': 'android', 'icon': 'list'})
     }
   }
 }
