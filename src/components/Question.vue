@@ -21,7 +21,7 @@ export default {
         {{question.owner.display_name}}
         <span>{{moment.unix(question.creation_date).fromNow()}}</span>
       </span>
-      <p class="question">{{question.title}}</p>
+      <p class="question"><a :href="question.link" target="_blank">{{question.title}}</a></p>
       <ul class="tags">
         <li v-for="tag in question.tags" :key="tag">{{tag}}</li>
       </ul>
@@ -55,6 +55,13 @@ export default {
 .question_container .question {
   font-weight: bold;
   word-wrap: anywhere;
+}
+.question_container .question a {
+  color: initial;
+}
+.question_container .question a:hover {
+  text-decoration: none;
+  background-color: transparent;
 }
 .question_container .tags {
   display: flex;
