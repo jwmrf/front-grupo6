@@ -1,16 +1,13 @@
 <script>
 import QuestionVue from './Question.vue';
 import axios from "axios";
-//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-//axios.defaults.headers.common['Access-Control-Allow-Methods'] = "GET, POST, PATCH, PUT, DELETE, OPTIONS";
-//axios.defaults.headers.common['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type, Accept";
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 export default {
   components: {
     QuestionVue
   },
-  props: ['tag'],
+  props: ['tag','feedid'],
   setup(props) {
     const data = ref(null);
     const loading = ref(true);
@@ -39,6 +36,12 @@ export default {
       loading,
       error
     }
+  },
+  methods: {
+    removeFeed() {
+      console.log('hh', this.$props.feedid);
+      this.$emit('removefeed', this.$props.feedid);
+    }
   }
 }
 </script>
@@ -49,7 +52,7 @@ export default {
       <h3>
         <slot name="name"></slot>
       </h3>
-      <button class="delete">
+      <button class="delete" @click="removeFeed()">
         <font-awesome-icon :icon='["fas", "trash"]' />
       </button>
     </div>

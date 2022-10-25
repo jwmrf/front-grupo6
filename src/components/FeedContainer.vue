@@ -20,9 +20,11 @@ export default {
   },
   methods: {
     addFeed(x) {
-      console.log(x)
-      console.log(1)
-      this.feeds.push({'id': 1, 'name': 'item 1', 'icon': 'list'})
+      this.feeds.push({'id': Math.floor(Date.now() / 1000), 'name': `Feed ${this.feeds.length + 1}`, 'icon': 'list'})
+    },
+    removeFeed(id) {
+      console.log(id);
+      this.feeds.splice(0, this.feeds.length, this.feeds.filter(el => el.id != id));
     }
   },
   mounted() {
@@ -34,8 +36,8 @@ export default {
 </script>
 
 <template>
-  <div class="main" @addfeed="addFeed">
-    <FeedVue v-for="feed in feeds" :tag="feed.name" :key="feed">
+  <div class="main" @addfeed="addFeed" @removefeed="removeFeed">
+    <FeedVue v-for="feed in feeds" :tag="feed.name" :feedid="feed.id" :key="feed">
       <template #name>
         <select>
           <option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</option>

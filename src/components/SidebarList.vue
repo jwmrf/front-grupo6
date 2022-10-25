@@ -2,14 +2,13 @@
 export default {
   data() { 
     return {
-      feeds: [{'id': 1, 'name': 'item 1', 'icon': 'list'}, {'id': 2, 'name': 'item 2', 'icon': 'list-check'}]
+      feeds: []
     }
   },
   methods: {
     addFeed() {
-      this.feeds.push({'id': 1, 'name': 'item 1', 'icon': 'list'})
+      //this.feeds.push({'id': this.feeds.length + 1, 'name': `Feed ${this.feeds.length + 1}`, 'icon': 'list'})
       this.$emit("addfeed", "")
-      console.log(2)
     }
   }
 }
