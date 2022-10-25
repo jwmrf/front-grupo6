@@ -1,3 +1,7 @@
+<script setup>
+import QuestionVue from './Question.vue'
+</script>
+
 <template>
   <div class="container">
     <div class="header">
@@ -8,7 +12,9 @@
         <font-awesome-icon :icon='["fas", "trash"]' />
       </button>
     </div>
-    <div class="body"></div>
+    <div class="body">
+      <QuestionVue></QuestionVue>
+    </div>
   </div>
 </template>
 
@@ -16,6 +22,7 @@
 .container {
   height: 100%;
   min-width: 300px;
+  max-width: 300px;
   background: var(--vt-c-white-mute);
   border-radius: .5rem;
 }

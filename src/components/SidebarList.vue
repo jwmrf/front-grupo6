@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <ul>
+  <ul class="icons_list">
     <li v-for="item in feeds">
       <font-awesome-icon :icon='["fas", item.icon]' class="icon" />
 
@@ -25,26 +25,26 @@ export default {
 </template>
 
 <style scoped>
-ul {
+ul.icons_list {
   padding: 0 0 .5rem 0;
   margin: 0 .65rem;
   margin-bottom: 1rem;
   border-bottom: 1px solid #000;
 }
-ul li {
+ul.icons_list li {
   display: flex;
   list-style: none;
   justify-content: center;
   padding: .5rem 0;
   position: relative;
 }
-ul li:hover {
+ul.icons_list li:hover {
   color: var(--vt-c-white);
 }
-ul li .icon {
+ul.icons_list li .icon {
   font-size: 1rem;
 }
-ul li .label, .add_feed .label {
+ul.icons_list li .label, .add_feed .label {
   position: absolute;
   left: 110%;
   top: 0;
@@ -55,7 +55,7 @@ ul li .label, .add_feed .label {
   padding: .5rem 1.5rem .5rem 1rem;
   display: none;
 }
-ul li:hover .label, .add_feed:hover .label {
+ul.icons_list li:hover .label, .add_feed:hover .label {
   display: initial;
 }
 
