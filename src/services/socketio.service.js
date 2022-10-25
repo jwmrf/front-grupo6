@@ -8,6 +8,10 @@ class SocketioService {
         this.socket = io('http://localhost:3000');
     }
 
+    getSocket() {
+        return this.socket;
+    }
+
     disconnect() {
         if (this.socket) {
             this.socket.disconnect();

@@ -2,6 +2,8 @@
 import QuestionVue from './Question.vue';
 import axios from "axios";
 
+import socketioService from '../services/socketio.service';
+
 import { ref } from "vue";
 
 export default {
@@ -25,9 +27,24 @@ export default {
     }
   },
   mounted() {
-    //setInterval(() => {
-      this.fetchData()
-    //}, 5000)
+    const socket = socketioService.getSocket();
+
+    socket.on("new_question", (data) => {
+      const reverse = data.reverse();
+      const tag = this.computeTag;
+
+      reverse.forEach(el => {
+        if (tag == 'todas') {
+          this.feedData.unshift(el);
+        } else {
+          if (el.tags.includes(tag)) {
+            this.feedData.unshift(el);
+          }
+        }
+      });
+    });
+
+    this.fetchData();
   },
   methods: {
     async fetchData() {
@@ -38,7 +55,6 @@ export default {
       loading.value = true;
       let response = await axios.get(`http://127.0.0.1:3000/questionByTagNormal?tag=${tag}`)
       this.feedData = response.data.data
-      console.log(this.feedData)
       return {
         data,
         loading,
