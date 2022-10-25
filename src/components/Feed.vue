@@ -11,7 +11,17 @@ export default {
   data () {
     return {
       feedData: [],
+      changedTag: undefined,
       tags: ["todas","c#","java","nodejs","javascript","python","php","android","ios","mysql","node.js"]
+    }
+  },
+  computed: {
+    computeTag() {
+      if (this.changedTag !== undefined) {
+        return this.changedTag;
+      }
+
+      return this.tag;
     }
   },
   mounted() {
@@ -24,8 +34,9 @@ export default {
       const data = ref(null);
       const loading = ref(true);
       const error = ref(null);
+      const tag = this.computeTag == 'todas' ? '' : this.computeTag;
       loading.value = true;
-      let response = await axios.get(`http://127.0.0.1:3000/questionByTagNormal?tag=${this.tag}`)
+      let response = await axios.get(`http://127.0.0.1:3000/questionByTagNormal?tag=${tag}`)
       this.feedData = response.data.data
       console.log(this.feedData)
       return {
@@ -34,8 +45,11 @@ export default {
         error
       }
     },
+    onChange(event) {
+      this.changedTag = event.target.value;
+      this.fetchData();
+    },  
     removeFeed() {
-      console.log('hh', this.$props.feedid);
       this.$emit('removefeed', this.$props.feedid);
     }
   },
@@ -46,7 +60,7 @@ export default {
 <template>
   <div class="container">
     <div class="header">
-        <select v-model="tag">
+        <select v-model="tag" @change="onChange($event)">
           <option v-for="tag in tags" :key="tag" :value="tag">{{tag}}</option>
         </select>
       <h3>
@@ -64,7 +78,7 @@ export default {
 
 <style scoped>
 .container {
-  height: 100%;
+  height: 97vh;
   min-width: 300px;
   max-width: 300px;
   background: var(--vt-c-white-mute);
@@ -91,7 +105,7 @@ export default {
 }
 
 .container .body {
-  height: 100%;
+  height: 90%;
   overflow-y: scroll;
 }
 </style>
