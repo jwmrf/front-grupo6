@@ -1,6 +1,23 @@
-<script setup>
+<script>
 import FeedContainerVue from './components/FeedContainer.vue';
 import SidebarListVue from './components/SidebarList.vue';
+export default {
+  name: "App",
+  components: {
+    FeedContainerVue,
+    SidebarListVue,
+  },
+  data() {
+    return {
+      feeds: []
+    }
+  },
+  methods: {
+    addFeed() {
+      this.feeds.push({'id': 1, 'name': 'android', 'icon': 'list'})
+    }
+  }
+}
 </script>
 
 <template>
@@ -14,11 +31,11 @@ import SidebarListVue from './components/SidebarList.vue';
     />
 
     <div class="wrapper">
-      <SidebarListVue />
+      <SidebarListVue @addfeed="addFeed" />
     </div>
   </header>
 
-  <FeedContainerVue />
+  <FeedContainerVue :feeds="feeds"/>
 </template>
 
 <style scoped>

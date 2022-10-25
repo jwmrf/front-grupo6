@@ -1,5 +1,9 @@
 <script>
 import QuestionVue from './Question.vue';
+import axios from "axios";
+//axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+//axios.defaults.headers.common['Access-Control-Allow-Methods'] = "GET, POST, PATCH, PUT, DELETE, OPTIONS";
+//axios.defaults.headers.common['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type, Accept";
 import { ref, computed, onMounted } from "vue";
 
 export default {
@@ -15,35 +19,15 @@ export default {
     function fetchData() {
       loading.value = true;
 
-      return fetch(`http://localhost:3000/questionByTagNormal?tag=${props.tag}`, {
-        method: 'get',
-        headers: {
-          'content-type': 'application/json'
-        }
-      }).then(res => {
-        if (!res.ok) {
-          const error = new Error(res.statusText);
-          error.json = res.json()
-
-          throw error;
-        }
-
-        return res.json();
-      }).then(json => {
-        data.value = json.data;
-
-        console.log(data.value);
-      }).catch(err => {
-        error.value = err;
-
-        if (err.json) {
-          return err.json.then(json => {
-            error.value.message = json.message;
-          })
-        }
-      }).then(() => {
-        loading.value = false;
+      return axios.get(`http://127.0.0.1:3000/questionByTag?tag=${props.tag}`).then(function (response) {
+        console.log(response);
       })
+      .catch(function (error) {
+        console.log(error);
+      })
+      .finally(function () {
+        // always executed
+      });
     }
 
     onMounted(() => {
@@ -57,11 +41,11 @@ export default {
     }
   },
   created: function() {
-    const connection = new WebSocket("ws://127.0.0.1:4000/");
+    //const connection = new WebSocket("ws://127.0.0.1:4000/");
 
-    connection.onmessage = event => {
-      console.log("received");
-    }
+    //connection.onmessage = event => {
+      //console.log("received");
+    //}
   }
 }
 </script>
